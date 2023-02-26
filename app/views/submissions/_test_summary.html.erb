@@ -1,0 +1,31 @@
+	<div>
+	<% if @quest_submissions.present? %>
+		  <table class="styled-table-submission-summary">
+	    <thead>
+	      <tr>
+	      	<th scope="col">S.No</th>
+	        <th scope="col">Question</th>
+	        <th scope="col">Option 1</th>
+	        <th scope="col">Option 2</th>
+	        <th scope="col">Option 3</th>
+	        <th scope="col">Option 4</th>
+	      </tr>
+	    </thead>
+	    <tbody>
+				<% @quest_submissions.each.with_index(1) do |each_submission, ind| %>
+					<tr>
+						<td> <%= ind %> </td>
+						<td> <%= each_submission.question.questions %> </td>
+						<% each_submission.question.options.each do |option| %>
+							<% if option.present? %>
+								<td class=<%= highlight_submitted_option(option, each_submission.option_id) %> > <%= option.opt_name %> </td>
+								<% else %>
+									<%= ' '%>
+								<%end%>
+						<% end %>
+					</tr>
+				<%end%>
+		</tbody>
+	</table>
+	<%end%>
+	</div>

@@ -1,4 +1,5 @@
 class SubmissionsController < ApplicationController
+	include SubmissionsHelper
 
 	before_action :require_user
 
@@ -16,21 +17,21 @@ class SubmissionsController < ApplicationController
 	        question_subs = QuestSubmission.where(submission_id: @submission.id) 
 	        question_subs.each do |q_sub|
 	        	question=Question.find(q_sub.question_id) #Find the question for each submission
-	        	answer=nil
+	        	answer_id=nil
 	        	option_all.each do |each_option|
 	        		if each_option.question_id == question.id
 	        			if each_option.is_answer == true 
-	        				answer = each_option.opt_name #Find the answer for each question
+	        				answer_id = each_option.id #Find the answer for each question
 	        			end
 	        		end
 	        	end
-	        	if q_sub.option==answer #If the option submitted is the answer, add the score
+	        	if q_sub.option_id==answer_id #If the option submitted is the answer, add the score
 	        		total_score+=question.score
 	        	end
 	        end
 	        @submission.score=total_score #Save the score to the submission
 	        @submission.save
-	        redirect_to controller: 'quizzes', action: 'index'
+	        redirect_to controller: 'submissions', action: 'show', id: @submission.id
 	    else
 	    	flash[:danger] = "Something went wrong"
 			redirect_to controller: 'quizzes', action: 'show', id: params[:quiz_id].to_i
@@ -40,10 +41,15 @@ class SubmissionsController < ApplicationController
 	def create
 	end
 
+	def show
+		@submission = Submission.find_by(id: params[:id])
+		@quest_submissions = @submission&.quest_submissions&.includes(:question)
+		@quiz = @submission&.quiz
+	end
 
 	private
 
     def submission_params
-		params.require(:submission).permit(:user_id, :quiz_id, quest_submissions_attributes: [:question_id, :option])
+		params.require(:submission).permit(:user_id, :quiz_id, quest_submissions_attributes: [:question_id, :option_id])
 	end
 end
