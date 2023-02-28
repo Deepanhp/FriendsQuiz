@@ -1,4 +1,23 @@
-<div class="row mt-4 text-center">
+<style>
+.column1 {
+  float: left;
+  width: 33.33%;
+  height: 180px;
+  align: center;
+  background-color: lightblue;    
+  text-align: center;
+  border: 1px outset black;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+</style>
+
+<div class="text-center mt-4 mb-3">
 	<% tscore=0 %>
 	<% quest_count=0 %>
 	<% @questions.each do |each_question| %>
@@ -20,22 +39,23 @@
 			<% tscore+=each_question.score %>
 		<% end %>
 	<% end %>
-	<div class="col-md-5 offset-md-1 col-sm-5 offset-sm-1 col-5 offset-1 border border-primary alert alert-primary">
-		<h4>Number of questions</h4>
+	<div class="column1">
+		<h5>Number of questions</h5>
 		<span class="display-3"><%= quest_count %></span>
 	</div>
 
-	<div class="col-md-5 col-sm-5 col-5 border border-left-0 border-primary alert alert-primary">
-		<h4>Total Score</h4>
+	<div class="column1">
+		<h5>Total Score</h5>
 		<span class="display-3"><%= tscore %></span>
 	</div>
 
-	<div class="col-md-8 offset-md-2 col-sm-10 offset-sm-1 col-8 offset-1">
-		<%= render 'quizTimer', start_time: (@submission.created_at + @quiz.duration.minutes).strftime("%e %b %Y %I:%M:%S %p")%>
+	<div class="column1">
+		<h5>Time left</h5>
+		<span class="display-4"><%= render 'quizTimer', start_time: (@submission.created_at + @quiz.duration.minutes).strftime("%e %b %Y %I:%M:%S %p")%></span>
 	</div>
 </div>
 
-<div class="mr-4 ml-5">
+<div class='col'>
 	<% if @quiz.categories.any? %>
 		<%= render @quiz.categories %>
 	<% end %>
