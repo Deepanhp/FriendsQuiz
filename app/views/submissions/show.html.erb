@@ -1,0 +1,18 @@
+<h1 class="text-center mt-3 mb-3">Test Results: </h1>
+<div class="text-center mb-3">
+	Submission score for the test
+</div>
+<div class="text-center">
+	<div class="row">
+		<div class="col-md-6 offset-md-3">
+			<h4 class="font-weight-normal mt-2"><%= @submission&.quiz&.name %></h4>
+			<div class="d-inline-flex alert alert-primary">Score: <%= @submission&.score %></div>
+			<% if (time_taken = get_time_taken_to_complete_quiz(@submission)).present? %>
+			<div class="d-inline-flex alert alert-primary">Time taken to complete the Quiz: <%= time_taken %> Minutes</div>
+			<% end %>
+		</div>
+	</div>
+</div>
+<!--List all submissions by user-->
+<h3 class="ml-5">Submissions:</h3>
+<%= render 'submissions/test_summary'%>

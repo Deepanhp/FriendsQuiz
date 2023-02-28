@@ -12,6 +12,7 @@
             <th scope='col'>Submitted Time</th>
         <%end%>
         <th scope="col">Actions</th>
+        <th scope="col">View Results</th>
       </tr>
     </thead>
     <tbody>
@@ -54,17 +55,16 @@
               </td>
               <td><%= quiz.duration %> mins</td>
               <td><%= quest_count %></td>
-              <% if !current_user.admin? && type=="Submission" %>
+              <td><% if !current_user.admin? && type=="Submission" %>
                 <% @submissions.each do |sub| %><!--Display time ago for each submission-->
                   <% if sub.quiz_id==quiz.id %>
-                    <td>
-                      <%= time_ago_in_words(sub.created_at) %> ago
-                    </td>
+                    <%= time_ago_in_words(sub.created_at) %> ago
                   <% end %>
                 <% end %>
-                <%else%>
-                <td> -- <td>
+              <%else%>
+                --
               <% end %>
+              </td>
               <td>
                 <% unless already_submitted %>
                   <%= link_to 'Take Quiz', quiz_path(quiz), class: "btn btn-success btn-sm" %>
@@ -72,6 +72,13 @@
                   <%= "Done"%>
                 <% end %>
               </td>
+              <td>
+                <% if (submission = @submissions.find_by_quiz_id(quiz.id)).present? && submission.quest_submissions.present? %>
+                  <%= link_to 'View Results', submission_path(submission.id), class: "btn btn-success btn-sm" %>
+                <% else %>
+                  <%= "No Results" %>
+                <% end %>
+                </td>
             <% elsif !logged_in?  %><!--For not logged in users-->
               <td><%= quiz.name %></td>
               <td><%= tscore %></td>

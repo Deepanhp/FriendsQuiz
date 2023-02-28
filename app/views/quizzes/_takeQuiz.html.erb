@@ -110,7 +110,7 @@
 													<div class="col-md-5 my-1 ml-1 text-center border border-light grey-back pt-1">
 														<h3>
 															<span class="btn btn-primary btn-sm option-btn"><!--Select option as radio button-->
-																<%= q.radio_button :option, each_option.opt_name, onClick: "toggleItemColor(#{j})" %>
+																<%= q.radio_button :option_id, each_option.id, onClick: "toggleItemColor(#{j})" %>
 																<%= q.label :option, each_option.opt_name, :value => each_option.opt_name %>
 															</span>
 														</h3>

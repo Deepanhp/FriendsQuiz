@@ -37,3 +37,39 @@ footer ul {
 .star-icon {
 	color: yellow;
 }
+.styled-table-submission-summary {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    width: 100%;
+}
+.styled-table-submission-summary thead tr {
+    background-color: #cce5ff;
+    text-align: left;
+}
+.styled-table-submission-summary th,
+.styled-table-submission-summary td {
+    padding: 12px 15px;
+}
+.styled-table-submission-summary tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+.styled-table-submission-summary tbody tr:last-of-type {
+    border-bottom: 2px solid #cce5ff;
+}
+.styled-table-submission-summary-option-correct {
+	background-color: #6cbf8c;
+	border-color: #6cbf8c;
+}
+.styled-table-submission-summary-option-wrong {
+	background-color: #dc3545;
+	border-color: #dc3545;
+	color: #ffffff;
+}
+.styled-table-submission-summary tbody tr.active-row {
+    font-weight: bold;
+    color: #cce5ff;
+}
